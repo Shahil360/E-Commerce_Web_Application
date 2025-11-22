@@ -430,7 +430,22 @@
       <!--------------custom js code ------------------->
       <script src="script.js"></script>
 
-    
+      <script>
+        const navLogin = document.querySelector(".links li:last-child a");
+        const user = localStorage.getItem("user");
+        
+        if (user) {
+            navLogin.textContent = "Sign out";
+            navLogin.href = "#";
+            navLogin.onclick = () => {
+                localStorage.removeItem("user");
+                window.location.reload();
+            };
+        }
+        </script>    
 
 </body>
 </html>
+
+
+  

@@ -209,6 +209,61 @@
       <script src="script.js"></script>
       <script src="design.js"></script>
 
-
+      <script>
+        const loginForm = document.querySelector("form.login");
+        const signupForm = document.querySelector("form.signup");
+        
+        // SIGNUP
+        signupForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+        
+            const data = {
+                name: signupForm.querySelector("input[placeholder='Name']").value,
+                email: signupForm.querySelector("input[placeholder='Email Address']").value,
+                phone: signupForm.querySelector("input[placeholder='Mobile Number']").value,
+                password: signupForm.querySelectorAll("input[type='password']")[0].value
+            };
+        
+            const res = await fetch("http://127.0.0.1:8000/signup", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        
+            alert("Signup successful! You can now login.");
+        });
+        
+        
+        // LOGIN
+        loginForm.addEventListener("submit", async (e) => {
+            e.preventDefault();
+        
+            const data = {
+                email: loginForm.querySelector("input[placeholder='Email Address']").value,
+                password: loginForm.querySelector("input[placeholder='Password']").value
+            };
+        
+            const res = await fetch("http://127.0.0.1:8000/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+        
+            if (!res.ok) {
+                alert("Invalid email or password");
+                return;
+            }
+        
+            const user = await res.json();
+        
+            // store login info locally
+            localStorage.setItem("user", JSON.stringify(user.user));
+        
+            window.location.href = "index.html";
+        });
+        </script>
 </body>
 </html>
+
+
+  

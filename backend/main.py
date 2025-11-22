@@ -56,47 +56,44 @@ def get_product(product_id: int):
 
 # Signup API
 @app.post("/signup")
-def signup(user: UserSignup):
+def signup(user: User):
     db = get_db()
     cursor = db.cursor()
 
-    # Hash password
-    hashed = hashlib.sha256(user.password.encode()).hexdigest()
+    cursor.execute(
+        "INSERT INTO users (name, email, password, mobile, is_admin) VALUES (%s, %s, %s, %s, %s)",
+        (user.name, user.email, user.password, user.mobile, user.is_admin)
+    )
 
-    try:
-        cursor.execute(
-            "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)",
-            (user.name, user.email, user.phone, hashed)
-        )
-        db.commit()
-    except:
-        raise HTTPException(status_code=400, detail="Email already exists")
-
+    db.commit()
     cursor.close()
     db.close()
+    return {"message": "User created"}
 
-    return {"message": "Signup successful"}
 
 
 # Login API
 @app.post("/login")
-def login(user: UserLogin):
+def login(data: LoginForm):
     db = get_db()
     cursor = db.cursor(dictionary=True)
 
-    hashed = hashlib.sha256(user.password.encode()).hexdigest()
-
     cursor.execute(
-        "SELECT * FROM users WHERE email = %s AND password = %s",
-        (user.email, hashed)
+        "SELECT * FROM users WHERE email=%s AND password=%s",
+        (data.email, data.password)
     )
-    result = cursor.fetchone()
 
+    user = cursor.fetchone()
     cursor.close()
     db.close()
 
-    if not result:
+    if not user:
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    return {"message": "Login successful", "user": result}
+    return {
+        "message": "Login successful",
+        "user_id": user["id"],
+        "is_admin": user["is_admin"]
+    }
+
 
