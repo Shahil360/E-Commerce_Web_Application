@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="shortcut icon" href="img/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rymo.</title>
+    <!-- Boxicons CSS cdn link -->
+    <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+    <!-- Grid & Main CSS -->
+    <link rel="stylesheet" href="vendors/css/grid.css">
+    <link rel="stylesheet" href="vendors/css/main.css">
+    <link rel="stylesheet" href="vendors/css/normalize.css">
+    <link rel="stylesheet" href="Css/style.css">
+    <link rel="stylesheet" href="Css/responsive.css">
+</head>
+<body>
+
+<button onclick="topFunction()" id="myBtn" title="Go to top">
+    <i class='bx bx-up-arrow-alt'></i>
+</button>
+
+<!-- Header -->
+<header>
+  <nav class="nav">
+      <div class="navbar">
+        <i class='bx bx-menu'></i>
+        <div class="logo"><a href="index.html">rymo.</a></div>
+        <div class="nav-links">
+          <div class="sidebar-logo">
+            <span class="logo-name">rymo.</span>
+            <i class='bx bx-x'></i>
+          </div>
+          <ul class="links">
+            <li><a href="index.html">HOME</a></li>
+            <li>
+              <a href="laptop.html"  onclick="return false">Laptop</a>
+              <i class='bx bxs-chevron-down laptop-arrow arrow'></i>
+              <ul class="laptop-sub-menu sub-menu">
+                <li><a href="laptop.html">Lenovo</a></li>
+                <li><a href="laptop.html">Asus</a></li>
+                <li><a href="laptop.html">Apple</a></li>
+                <li><a href="laptop.html">HP</a></li>
+              </ul>
+            </li>
+            <li>
+              <a href="mobile.html" onclick="return false">Mobile</a>
+              <i class='bx bxs-chevron-down mobile-arrow arrow'></i>
+              <ul class="mobile-sub-menu sub-menu">
+                <li><a href="mobile.html">Huawei</a></li>
+                <li><a href="mobile.html">Infinix</a></li>
+                <li><a href="mobile.html">Apple</a></li>
+                <li><a href="mobile.html">Redmi</a></li>
+              </ul>
+            </li>
+            <li><a href="about.html">ABOUT US</a></li>
+            <li><a href="contact.html">CONTACT US</a></li>
+            <li><a href="login.html">Login/Sign in</a></li>
+          </ul>
+        </div>
+        <div class="shoping-cart">
+          <a href="cart.html">
+              <i class='bx bx-cart'></i>
+          </a>
+        </div>
+      </div>
+  </nav>
+</header>
+
+<!-- Main Product Section -->
+<div class="main-wrapper">
+  <div class="container">
+      <div class="product-div">
+          <div class="product-div-left">
+              <div class="img-container">
+                  <img src="" alt="Product Image" id="main-product-image">
+              </div>
+              <div class="hover-container" id="hover-images">
+                  <div><img src="img/p.jpg"></div>
+                  <div><img src="img/l1.png"></div>
+                  <div><img src="img/l2.png"></div>
+                  <div><img src="img/l3.png"></div>
+                  <div><img src="img/l4.png"></div>
+              </div>
+          </div>
+          <div class="product-div-right">
+              <span class="product-name" id="product-name"></span>
+              <span class="product-price" id="product-price"></span>
+              <p class="product-description" id="product-description"></p>
+              <div class="btn-groups">
+                  <button type="button" class="add-cart-btn"><i class='bx bxs-cart'></i> add to cart</button>
+                  <button type="button" class="buy-now-btn"><i class='bx bxs-wallet'></i> buy now</button>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="container4">
+    <div class="row4">
+      <div class="footer-col">
+        <h4>company</h4>
+        <ul>
+          <li><a href="#">about us</a></li>
+          <li><a href="#">our services</a></li>
+          <li><a href="#">privacy policy</a></li>
+          <li><a href="#">affiliate program</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>get help</h4>
+        <ul>
+          <li><a href="#">FAQ</a></li>
+          <li><a href="#">shipping</a></li>
+          <li><a href="#">returns</a></li>
+          <li><a href="#">order status</a></li>
+          <li><a href="#">payment options</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>online shop</h4>
+        <ul>
+          <li><a href="#">watch</a></li>
+          <li><a href="#">bag</a></li>
+          <li><a href="#">shoes</a></li>
+          <li><a href="#">dress</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>follow us</h4>
+        <div class="social-links">
+          <a href="#"><i class='bx bxl-facebook-circle'></i></a>
+          <a href="#"><i class='bx bxl-twitter'></i></a>
+          <a href="#"><i class="bx bxl-instagram"></i></a>
+          <a href="#"><i class='bx bxl-whatsapp'></i></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+<script>
+window.onload = async function() {
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get("id");
+    if (!productId) return alert("No product ID provided!");
+
+    const res = await fetch(`http://127.0.0.1:8000/products/${productId}`);
+    if (!res.ok) return alert("Product not found!");
+    const product = await res.json();
+
+    // Populate main info
+    document.getElementById("product-name").textContent = product.name;
+    document.getElementById("product-price").textContent = "$ " + product.price;
+    document.getElementById("product-description").textContent = product.description;
+    document.getElementById("main-product-image").src = product.image;
+
+    // Hover image functionality (static images)
+    const allHoverImages = document.querySelectorAll(".hover-container div img");
+    const mainImage = document.getElementById("main-product-image");
+
+    function resetActiveImg() {
+        allHoverImages.forEach(img => img.parentElement.classList.remove("active"));
+    }
+
+    allHoverImages.forEach(img => {
+        img.addEventListener("mouseover", () => {
+            mainImage.src = img.src;
+            resetActiveImg();
+            img.parentElement.classList.add("active");
+        });
+    });
+};
+
+// Scroll button
+var mybutton = document.getElementById("myBtn");
+window.onscroll = function() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        mybutton.style.display = "block";
+    } else {
+        mybutton.style.display = "none";
+    }
+};
+function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+}
+</script>
+
+</body>
+</html>
