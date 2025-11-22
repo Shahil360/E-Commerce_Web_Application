@@ -94,12 +94,12 @@
         </video>
         <div class="video-overlay header-text">
             <div class="hero-text">
-                <h6>Trand-in-offer</h6>
+              <h6 style="font-size: 22px;" id="welcome-text">Sign in for extra benefits!</h6>
                 <h3 class="g-color-text">Super Value Deals </h3>
                 <h4>On all products</h4>
                 <p>Save more with coupons & up to 70% off!</p>
                 <div class="text-box">
-                    <a href="laptop.html" class="btn btn-white btn-animate">Shop now</a>
+                  <a href="#" class="btn btn-white btn-animate" id="shop-now-btn">Shop now</a>
                 </div>
                 
             </div>
@@ -110,7 +110,7 @@
 <br><br>
     <!--------------Header section close------------------->
     <!--------------sponsor section start------------------->
-    <section class="section">
+    <section class="section" id="sponsor-section">
         <div class="row">
             <div class=" col span_1_of_4 box w-50">
                 <img src="img/samsung-logo.png" alt="Sponsor Company Logo" class="sclogo">
@@ -215,8 +215,8 @@
       
     </section> -->
     <section class="section feature">
-      <div class="row">
-        <h2 class="title">Featured Products</h2>
+      <div class="row" id="featured-products-title">
+        <h2 class="title" >Featured Products</h2>
       </div>
     
       <!-- Dynamic products will be injected here -->
@@ -443,6 +443,34 @@
             window.location.href = "login.html";
         };
     }
+    const welcome = document.getElementById("welcome-text");
+    const userData = localStorage.getItem("user");
+
+    if (!welcome) return;
+
+    if (userData) {
+        const user = JSON.parse(userData);
+
+        let text = `Welcome ${user.name}!`;
+
+        if (user.is_admin) {
+            text += " (Admin)";
+        }
+
+        welcome.textContent = text;
+    } else {
+        welcome.textContent = "Sign in for extra benefits!";
+    }
+    const shopBtn = document.getElementById('shop-now-btn');
+    const products = document.getElementById('sponsor-section');
+
+    if (shopBtn && products) {
+        shopBtn.addEventListener('click', (e) => {
+         e.preventDefault();
+          products.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
 });
 
         </script>    

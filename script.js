@@ -75,5 +75,5 @@ window.onload = async function() {
           container.innerHTML = "<p>Unable to load products. Please try again later.</p>";
       }
   }
-  
+ 
 };
