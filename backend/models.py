@@ -6,3 +6,15 @@ class Product(BaseModel):
     image: str
     review_image: str
 
+class UserSignup(BaseModel):
+    name: str
+    email: str
+    phone: str
+    password: str
+    is_admin: int = 0
+
+class UserLogin(BaseModel):
+    email: str
+    password: str
+
+

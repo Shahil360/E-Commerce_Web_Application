@@ -1,7 +1,9 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from database import get_db
-from models import Product
+from models import Product, UserSignup, UserLogin
+import hashlib
+
 
 app = FastAPI()
 
@@ -51,3 +53,50 @@ def get_product(product_id: int):
     if not product:
         raise HTTPException(status_code=404, detail="Product not found")
     return product
+
+# Signup API
+@app.post("/signup")
+def signup(user: UserSignup):
+    db = get_db()
+    cursor = db.cursor()
+
+    # Hash password
+    hashed = hashlib.sha256(user.password.encode()).hexdigest()
+
+    try:
+        cursor.execute(
+            "INSERT INTO users (name, email, phone, password) VALUES (%s, %s, %s, %s)",
+            (user.name, user.email, user.phone, hashed)
+        )
+        db.commit()
+    except:
+        raise HTTPException(status_code=400, detail="Email already exists")
+
+    cursor.close()
+    db.close()
+
+    return {"message": "Signup successful"}
+
+
+# Login API
+@app.post("/login")
+def login(user: UserLogin):
+    db = get_db()
+    cursor = db.cursor(dictionary=True)
+
+    hashed = hashlib.sha256(user.password.encode()).hexdigest()
+
+    cursor.execute(
+        "SELECT * FROM users WHERE email = %s AND password = %s",
+        (user.email, hashed)
+    )
+    result = cursor.fetchone()
+
+    cursor.close()
+    db.close()
+
+    if not result:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+    return {"message": "Login successful", "user": result}
+
