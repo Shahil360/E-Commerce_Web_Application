@@ -48,6 +48,8 @@ cd backend
 uvicorn main:app --reload
 ```
 
+### 4. Run the frontend
+Open or run index.html in your browser
 
 
 
